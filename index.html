@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>local storage test</title>
+    <style>
+        .container{
+            background-color: rgb(187, 187, 187);
+            height: 400px;
+            width: 600px;
+            margin:auto;
+            display: table;
+        }
+        .colors{
+            height: 100px;
+            width: 440px;
+            background-color: aliceblue;
+            margin-left: auto;
+            margin-right: auto;
+            display: table;
+            position: relative;
+            top: 10px;
+        }
+     
+        #red,#green,#blue,#black{
+           display: inline-flex;
+            height: 80px;
+            width: 80px;
+            margin: 10px;
+        }
+        #red{
+            background-color: red;
+        }
+        #green{
+            background-color: green;
+        }
+        #blue{
+            background-color: blue;
+        }
+        #black{
+            background-color: black;
+        }
+        .main{
+           
+            height: 200px;
+            width: 500px;
+           position: relative;
+           top: 40px;
+            margin-left: auto;
+            margin-right: auto;
+            display: table;
+            background-color: red;
+        }
+        .small{
+            opacity: 0.5;
+        }
+    
+        .selected,.small:hover{
+           cursor: pointer; opacity: 1;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <ul class="colors">
+            <li class="small selected"  data-color="red" id="red"></li>
+            <li class="small" data-color="green"id="green"></li>
+            <li class="small" data-color="blue" id="blue"></li>
+            <li class="small" data-color="black"id="black"></li>
+        </ul>
+        <div class="main"></div>
+    </div>
+    
+    <script>
+       
+    const main= document.getElementsByClassName('main')[0]
+    const all=document.querySelectorAll('ul li')
+     if(window.localStorage.getItem('color')){
+            main.style.backgroundColor=window.localStorage.getItem('color')
+            all.forEach((li)=>{
+                li.classList.remove("selected")
+            })
+            document.querySelector(`[data-color="${window.localStorage.getItem("color")}"]`).classList.add('selected')
+        }
+    all.forEach((li)=>{
+        li.addEventListener('click',(e)=>{
+           all.forEach((li)=>{
+            li.classList.remove("selected")//remove the opacity from the old color
+           })
+           e.currentTarget.classList.add('selected')//Add the opacity to the new color
+           window.localStorage.setItem("color",e.currentTarget.dataset.color)
+           main.style.backgroundColor=e.currentTarget.dataset.color
+        })
+    })
+</script>
+</body>
+</html>
